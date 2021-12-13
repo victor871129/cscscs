@@ -1,2 +1,2 @@
 # cscscs
-Cross-platform servicd containing stylishable cascading sheets
+Cross-platform service containing stylishable cascading sheets
