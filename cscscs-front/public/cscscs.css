@@ -1,0 +1,11 @@
+/*this has two rules*/
+.firstNameqwe .string {
+    content: "Text Default Value";
+    order: 1;
+    max-width: "50em";
+}
+
+.lastName .string {
+    order: 2;
+    max-width: "50em";
+}
