@@ -1,13 +1,13 @@
 /*this has two rules*/
-.string .firstName {
+.string.firstName {
     content: "Text Default Value";
     max-width: "50em";
 }
 
-.string .lastName {
+.string.lastName {
     max-width: "50em";
 }
 
-.data-url .uploadFile {
+.data-url.uploadFile {
     content: ".pdf"
 }

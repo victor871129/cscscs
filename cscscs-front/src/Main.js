@@ -13,7 +13,7 @@ function Main() {
     };
 
     const titleItem = (mainPrincipal, firstItem) => {
-        return mainPrincipal.filter(titleItem => titleItem !== firstItem)[0].substring(1);
+        return mainPrincipal.filter(titleItem => titleItem !== firstItem && titleItem.length > 0)[0];
     }
 
     const loadData = () => {
@@ -43,22 +43,22 @@ function Main() {
                 const dd = sheetRules.map((actualItem) => {
                     const finalValue = {}
                     const primarySelector = actualItem.selectors[0];
-                    const mainPrincipal = primarySelector.split(' ');
+                    const mainPrincipal = primarySelector.split('.');
 
-                    if (mainPrincipal.length < 2) {
+                    if (mainPrincipal.length < 3) {
                         throw new Error("Invalid principal length")
                     }
 
-                    if (mainPrincipal.filter(titleItem => titleItem === '.string').length > 0) {
+                    if (mainPrincipal.filter(titleItem => titleItem === 'string').length > 0) {
                         const itemType = "string";
                         finalValue.type = itemType;
-                        finalValue.title = titleItem(mainPrincipal, `.${itemType}`);
+                        finalValue.title = titleItem(mainPrincipal, itemType);
                     }
-                    else if(mainPrincipal.filter(titleItem => titleItem === '.data-url').length > 0) {
+                    else if(mainPrincipal.filter(titleItem => titleItem === 'data-url').length > 0) {
                         const itemType = "data-url";
                         finalValue.type = "string";
                         finalValue.format = itemType;
-                        finalValue.title = titleItem(mainPrincipal, `.${itemType}`);
+                        finalValue.title = titleItem(mainPrincipal, itemType);
                     }
                     else {
                         throw new Error("Invalid principal type")
