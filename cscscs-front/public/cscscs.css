@@ -1,11 +1,13 @@
 /*this has two rules*/
-.firstNameqwe .string {
+.string .firstName {
     content: "Text Default Value";
-    order: 1;
     max-width: "50em";
 }
 
-.lastName .string {
-    order: 2;
+.string .lastName {
     max-width: "50em";
+}
+
+.data-url .uploadFile {
+    content: ".pdf"
 }
