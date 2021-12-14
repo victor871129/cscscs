@@ -1,13 +1,13 @@
 /*this has two rules*/
 .string.firstName {
-    content: "Text Default Value";
-    max-width: "50em";
+  content: "Text Default Value";
+  max-width: "50em";
 }
 
 .boolean.isDone {
-    content: falsev;
+  content: falsev;
 }
 
 .data-url.uploadFile {
-    content: ".pdf"
+  content: ".pdf";
 }
