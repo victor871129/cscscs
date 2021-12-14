@@ -88,6 +88,19 @@ const Main = () => {
               finalValue.default = defaultItem(mainContent);
             }
           } else if (
+            mainPrincipal.filter((useItem) => useItem === "integer").length > 0
+          ) {
+            const itemType = "integer";
+            finalValue.type = itemType;
+            finalValue.title = titleItem(mainPrincipal, itemType);
+
+            if (mainContent.length > 0) {
+              finalValue.default = defaultItem(mainContent);
+            }
+          }
+
+          //Other principal types
+          else if (
             mainPrincipal.filter((titleItem) => titleItem === "boolean")
               .length > 0
           ) {

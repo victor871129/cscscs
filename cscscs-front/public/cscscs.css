@@ -4,6 +4,10 @@
   max-width: "50em";
 }
 
+.integer.age {
+    content: "25";
+  }
+
 .boolean.isDone {
   content: "true";
 }
