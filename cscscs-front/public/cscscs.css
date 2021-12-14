@@ -1,11 +1,11 @@
-/*this has two rules*/
+/*this has three rules*/
 .string.firstName {
   content: "Text Default Value";
   max-width: "50em";
 }
 
 .boolean.isDone {
-  content: "false";
+  content: "true";
 }
 
 .data-url.uploadFile {

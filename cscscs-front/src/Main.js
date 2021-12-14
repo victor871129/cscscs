@@ -5,6 +5,7 @@ import _ from "lodash";
 
 const Main = () => {
   const [formSchema, setFormSchema] = useState();
+  const [userSchema, setUserSchema] = useState();
 
   const schema = {
     required: ["title"],
@@ -20,6 +21,14 @@ const Main = () => {
         (titleItem) => titleItem !== firstItem && titleItem.length > 0
       )[0]
     );
+  };
+
+  const defaultItem = (mainContent) => {
+    const actualValue = mainContent[0].value;
+    if (actualValue.charAt(0) === '"' || actualValue.charAt(0) === "'") {
+      return actualValue.substring(1, actualValue.length - 1);
+    }
+    return actualValue;
   };
 
   const loadData = () => {
@@ -56,7 +65,7 @@ const Main = () => {
           );
         }
 
-        const properties = sheetRules.map((actualItem) => {
+        const actualProperties = sheetRules.map((actualItem) => {
           const finalValue = {};
           const mainPrincipal = actualItem.selectors[0].split(".");
           const mainContent = actualItem.declarations.filter(
@@ -73,6 +82,10 @@ const Main = () => {
             const itemType = "string";
             finalValue.type = itemType;
             finalValue.title = titleItem(mainPrincipal, itemType);
+
+            if (mainContent.length > 0) {
+              finalValue.default = defaultItem(mainContent);
+            }
           } else if (
             mainPrincipal.filter((titleItem) => titleItem === "data-url")
               .length > 0
@@ -88,22 +101,25 @@ const Main = () => {
             const itemType = "boolean";
             finalValue.type = itemType;
             finalValue.title = titleItem(mainPrincipal, itemType);
+
+            const isTrue = defaultItem(mainContent) === "true"
+            if (mainContent.length > 0 && isTrue) {
+              finalValue.default = true;
+            }
           } else {
             throw new Error("Invalid principal type");
-          }
-
-          if (
-            mainContent.length > 0 &&
-            finalValue.type === "string" &&
-            finalValue.format == null //Check is string but is not data-url
-          ) {
-            finalValue.default = mainContent[0].value;
           }
 
           return finalValue;
         });
 
+        const properties = {};
+        for (const actualValue of actualProperties) {
+          properties[actualValue.title] = actualValue;
+        }
+
         setFormSchema({ properties });
+        setUserSchema(); // TODO
         console.log(
           "sdfsdfsdf",
           properties,
@@ -121,6 +137,7 @@ const Main = () => {
       {formSchema != null && (
         <Form
           schema={formSchema}
+          uiSchema={userSchema}
           onChange={(x) => console.log(x)}
           onSubmit={(x) => console.log(x)}
           onError={(x) => console.log(x)}
