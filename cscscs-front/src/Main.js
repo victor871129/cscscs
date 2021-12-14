@@ -1,9 +1,11 @@
 import Form from "@rjsf/core";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { parse, stringify } from "css";
 import _ from "lodash";
 
-function Main() {
+const Main = () => {
+  const [formSchema, setFormSchema] = useState();
+
   const schema = {
     required: ["title"],
     properties: {
@@ -52,7 +54,7 @@ function Main() {
           );
         }
 
-        const dd = sheetRules.map((actualItem) => {
+        const properties = sheetRules.map((actualItem) => {
           const finalValue = {};
           const primarySelector = actualItem.selectors[0];
           const mainPrincipal = primarySelector.split(".");
@@ -86,12 +88,14 @@ function Main() {
           } else {
             throw new Error("Invalid principal type");
           }
+
           return finalValue;
         });
 
+        setFormSchema({ properties });
         console.log(
           "sdfsdfsdf",
-          dd,
+          properties,
           parsedObject,
           stringify(parsedObject, { compress: true })
         );
@@ -102,13 +106,17 @@ function Main() {
   useEffect(loadData, []);
 
   return (
-    <Form
-      schema={schema}
-      onChange={(x) => console.log(x)}
-      onSubmit={(x) => console.log(x)}
-      onError={(x) => console.log(x)}
-    />
+    <>
+      {formSchema != null && (
+        <Form
+          schema={formSchema}
+          onChange={(x) => console.log(x)}
+          onSubmit={(x) => console.log(x)}
+          onError={(x) => console.log(x)}
+        />
+      )}
+    </>
   );
-}
+};
 
 export default Main;

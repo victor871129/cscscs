@@ -5,7 +5,7 @@
 }
 
 .boolean.isDone {
-  content: falsev;
+  content: "false";
 }
 
 .data-url.uploadFile {
