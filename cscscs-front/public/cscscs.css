@@ -4,8 +4,8 @@
     max-width: "50em";
 }
 
-.string.lastName {
-    max-width: "50em";
+.boolean.isDone {
+    content: falsev;
 }
 
 .data-url.uploadFile {

@@ -60,6 +60,11 @@ function Main() {
                         finalValue.format = itemType;
                         finalValue.title = titleItem(mainPrincipal, itemType);
                     }
+                    else if (mainPrincipal.filter(titleItem => titleItem === 'boolean').length > 0) {
+                        const itemType = "boolean";
+                        finalValue.type = itemType;
+                        finalValue.title = titleItem(mainPrincipal, itemType);
+                    }
                     else {
                         throw new Error("Invalid principal type")
                     }
