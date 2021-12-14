@@ -71,7 +71,6 @@ function Main() {
                     return finalValue;
                 })
 
-                console.log("sdfsdfsdf", dd, parsedObject); //, stringify(parsedObject, { compress: true })
                 console.log("sdfsdfsdf", dd, parsedObject, stringify(parsedObject, { compress: true }));
             })
             .catch(console.error);
