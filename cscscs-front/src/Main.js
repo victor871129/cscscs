@@ -65,9 +65,10 @@ const Main = () => {
           );
         }
 
+        const userInterface = {};
         const actualProperties = sheetRules.map((actualItem) => {
-          const finalValue = {};
-          const mainPrincipal = actualItem.selectors[0].split(".");
+          const finalValue = {}; // TODO rename to finalSchema
+          const mainPrincipal = actualItem.selectors[0].split("."); // TODO rename to firstPrincipal
           const mainContent = actualItem.declarations.filter(
             (useItem) => useItem.property === "content"
           );
@@ -87,14 +88,6 @@ const Main = () => {
               finalValue.default = defaultItem(mainContent);
             }
           } else if (
-            mainPrincipal.filter((titleItem) => titleItem === "data-url")
-              .length > 0
-          ) {
-            const itemType = "data-url";
-            finalValue.type = "string";
-            finalValue.format = itemType;
-            finalValue.title = titleItem(mainPrincipal, itemType);
-          } else if (
             mainPrincipal.filter((titleItem) => titleItem === "boolean")
               .length > 0
           ) {
@@ -102,9 +95,26 @@ const Main = () => {
             finalValue.type = itemType;
             finalValue.title = titleItem(mainPrincipal, itemType);
 
-            const isTrue = defaultItem(mainContent) === "true"
+            const isTrue = defaultItem(mainContent) === "true";
             if (mainContent.length > 0 && isTrue) {
               finalValue.default = true;
+            }
+          } else if (
+            mainPrincipal.filter((titleItem) => titleItem === "data-url")
+              .length > 0
+          ) {
+            const itemType = "data-url";
+            finalValue.type = "string";
+            finalValue.format = itemType;
+            const yy = titleItem(mainPrincipal, itemType);
+            finalValue.title = yy;
+
+            if (mainContent.length > 0) {
+              userInterface[yy] = {
+                "ui:options": {
+                  accept: defaultItem(mainContent),
+                },
+              };
             }
           } else {
             throw new Error("Invalid principal type");
@@ -119,9 +129,9 @@ const Main = () => {
         }
 
         setFormSchema({ properties });
-        setUserSchema(); // TODO
+        setUserSchema(userInterface);
         console.log(
-          "sdfsdfsdf",
+          userInterface,
           properties,
           parsedObject,
           stringify(parsedObject, { compress: true })

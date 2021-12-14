@@ -1,6 +1,6 @@
 /*this has three rules*/
 .string.firstName {
-  content: "Text Default Value";
+  content: "Default value";
   max-width: "50em";
 }
 
