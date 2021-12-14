@@ -15,9 +15,11 @@ const Main = () => {
   };
 
   const titleItem = (mainPrincipal, firstItem) => {
-    return mainPrincipal.filter(
-      (titleItem) => titleItem !== firstItem && titleItem.length > 0
-    )[0];
+    return _.startCase(
+      mainPrincipal.filter(
+        (titleItem) => titleItem !== firstItem && titleItem.length > 0
+      )[0]
+    );
   };
 
   const loadData = () => {
@@ -56,16 +58,17 @@ const Main = () => {
 
         const properties = sheetRules.map((actualItem) => {
           const finalValue = {};
-          const primarySelector = actualItem.selectors[0];
-          const mainPrincipal = primarySelector.split(".");
+          const mainPrincipal = actualItem.selectors[0].split(".");
+          const mainContent = actualItem.declarations.filter(
+            (useItem) => useItem.property === "content"
+          );
 
           if (mainPrincipal.length < 3) {
             throw new Error("Invalid principal length");
           }
 
           if (
-            mainPrincipal.filter((titleItem) => titleItem === "string").length >
-            0
+            mainPrincipal.filter((useItem) => useItem === "string").length > 0
           ) {
             const itemType = "string";
             finalValue.type = itemType;
@@ -87,6 +90,14 @@ const Main = () => {
             finalValue.title = titleItem(mainPrincipal, itemType);
           } else {
             throw new Error("Invalid principal type");
+          }
+
+          if (
+            mainContent.length > 0 &&
+            finalValue.type === "string" &&
+            finalValue.format == null //Check is string but is not data-url
+          ) {
+            finalValue.default = mainContent[0].value;
           }
 
           return finalValue;
