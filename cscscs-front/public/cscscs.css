@@ -1,17 +1,17 @@
-/*this has three rules*/
+/*this is a comment*/
 .string.firstName {
   content: "Default value";
   max-width: "50em";
 }
 
 .integer.age {
-    content: "25";
-  }
+  content: "25";
+}
 
 .boolean.isDone {
   content: "true";
 }
 
-.data-url.uploadFile {
+.data-url.uploadDocument {
   content: ".pdf";
 }
